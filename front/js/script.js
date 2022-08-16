@@ -7,51 +7,48 @@ fetch('http://localhost:3000/api/products')
 
     //FOR LOOP OF
     for (let products of updateData) {
+
+        let divclass = document.createElement('div');
+
+        let blockSection = document.createElement('section');
+        let aHref = document.createElement('a');
+        let newArticle = document.createElement('article');
+        let newImg = document.createElement('img');
+        let nameOfTheProduct = document.createElement('h3');
+        let newParagraph = document.createElement('p');
+
+        //
+        aHref.setAttribute('href', products._id);
+        newImg.setAttribute('src', products.imageUrl);
+
+        nameOfTheProduct.textContent = products.name;
+        newParagraph.textContent = products.description;
         
-    //Creating Elements
-    let newArticle = document.createElement('article');
-    let newImg = document.createElement('img');
+        blockSection.appendChild(aHref);
+        blockSection.appendChild(newArticle);
+        newArticle.appendChild(newImg);
+        newArticle.appendChild(nameOfTheProduct);
+        newArticle.appendChild(newParagraph);
 
-    let newHeading = document.createElement('h3');
-    let newParagraph = document.createElement('p');
+        divclass.classList.add('limitedWidthBlock');
+        aHref.className = 'a';
+        newArticle.className = 'article';
+        newImg.className = 'img';
+        nameOfTheProduct.classList.add('productName');
+        newParagraph.classList.add('productDescription');
+        blockSection.classList.add('items');
 
-    //Modify the DOM
-    newHeading.textContent = products.name;
-    newParagraph.textContent = products.description;
+        //To give our section an id
+        blockSection.setAttribute('id', 'items');
+
+        const main = document.querySelector('main');
+        main.appendChild(blockSection);
+        
+        console.log(newImg);
+        console.log(nameOfTheProduct);
+        console.log(newParagraph);
     
-    //Insert the modification at the end
-    
-    newArticle.appendChild(newHeading);
-    newArticle.appendChild(newParagraph);
-    
-    //Add the class
-    newHeading.classList.add('productName');
-    newParagraph.classList.add('productDescription');
-
-    //Insert in the sreen
-    
-    const main = document.querySelector('main');
-    main.appendChild(newArticle);
-
-    /*
-    **
-    I AM TRYING TO DISPLAY IMAGES WITH THIS CODES
-    *
-    let newImg = document.createElement('img');
-
-    let newSrc = document.createElement('src');
-    let newAlt = document.createElement('alt');
-    newSrc.textContent = products.imageUrl;
-    newAlt.textContent = 'alt';
-    newImg.appendChild(newSrc);
-    const article = document.querySelector('article');
-    article.appendChild(newImg);
-    console.log(newImg)
-    *
-    **
-    */
-
-      }
+    }
       
 }).catch((err) => {
     console.log(err);
