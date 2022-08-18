@@ -30,12 +30,12 @@ fetch('http://localhost:3000/api/products')
         newArticle.appendChild(nameOfTheProduct);
         newArticle.appendChild(newParagraph);
 
-        divclass.classList.add('limitedWidthBlock');
-        aHref.className = 'a';
-        newArticle.className = 'article';
-        newImg.className = 'img';
-        nameOfTheProduct.classList.add('productName');
-        newParagraph.classList.add('productDescription');
+       // divclass.classList.add('limitedWidthBlock');
+        //aHref.className= 'a';
+        //newArticle.className = 'article';
+        //newImg.className = 'img';
+        //nameOfTheProduct.classList.add('productName');
+        //newParagraph.classList.add('productDescription');
         blockSection.classList.add('items');
 
         //To give our section an id
@@ -43,11 +43,9 @@ fetch('http://localhost:3000/api/products')
 
         const main = document.querySelector('main');
         main.appendChild(blockSection);
+
+
         
-        console.log(newImg);
-        console.log(nameOfTheProduct);
-        console.log(newParagraph);
-    
     }
       
 }).catch((err) => {
