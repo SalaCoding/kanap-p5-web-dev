@@ -8,34 +8,26 @@ fetch('http://localhost:3000/api/products')
     //FOR LOOP OF
     for (let products of updateData) {
         
-        //let blockSection = document.querySelector('section');
-        let aHref = document.querySelector('a');
+        let aHref = document.createElement('a');
         let newArticle = document.createElement('article');
         let newImg = document.createElement('img');
         let nameOfTheProduct = document.createElement('h3');
         let newParagraph = document.createElement('p');
 
         //
-        aHref.setAttribute('href', `./product.html?id=${products._id}`);
+        aHref.setAttribute('href', products._id);
         newImg.setAttribute('src', products.imageUrl);
         nameOfTheProduct.textContent = products.name;
         newParagraph.textContent = products.description;
         
-        aHref.textContent = aHref;
+        //aHref.textContent = aHref;
         aHref.appendChild(newArticle);
         newArticle.appendChild(newImg);
         newArticle.appendChild(nameOfTheProduct);
         newArticle.appendChild(newParagraph);
 
-        nameOfTheProduct.classList.add('productName');
-        newParagraph.classList.add('productDescription');
-        newArticle.classList.add('article');
-
-        //To give our section an id
-        //blockSection.setAttribute('id', 'items');
-
-        const section = document.querySelector('section');
-        section.appendChild(aHref);
+        const ItemSection = document.getElementById('items');
+        ItemSection.appendChild(aHref);
         
     }
       
