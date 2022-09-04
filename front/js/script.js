@@ -7,44 +7,35 @@ fetch('http://localhost:3000/api/products')
 
     //FOR LOOP OF
     for (let products of updateData) {
-
-        let divclass = document.createElement('div');
-
-        let blockSection = document.createElement('section');
-        let aHref = document.createElement('a');
+        
+        //let blockSection = document.querySelector('section');
+        let aHref = document.querySelector('a');
         let newArticle = document.createElement('article');
         let newImg = document.createElement('img');
         let nameOfTheProduct = document.createElement('h3');
         let newParagraph = document.createElement('p');
 
         //
-        aHref.setAttribute('href', products._id);
+        aHref.setAttribute('href', `./product.html?id=${products._id}`);
         newImg.setAttribute('src', products.imageUrl);
-
         nameOfTheProduct.textContent = products.name;
         newParagraph.textContent = products.description;
         
-        blockSection.appendChild(aHref);
-        blockSection.appendChild(newArticle);
+        aHref.textContent = aHref;
+        aHref.appendChild(newArticle);
         newArticle.appendChild(newImg);
         newArticle.appendChild(nameOfTheProduct);
         newArticle.appendChild(newParagraph);
 
-       // divclass.classList.add('limitedWidthBlock');
-        //aHref.className= 'a';
-        //newArticle.className = 'article';
-        //newImg.className = 'img';
-        //nameOfTheProduct.classList.add('productName');
-        //newParagraph.classList.add('productDescription');
-        blockSection.classList.add('items');
+        nameOfTheProduct.classList.add('productName');
+        newParagraph.classList.add('productDescription');
+        newArticle.classList.add('article');
 
         //To give our section an id
-        blockSection.setAttribute('id', 'items');
+        //blockSection.setAttribute('id', 'items');
 
-        const main = document.querySelector('main');
-        main.appendChild(blockSection);
-
-
+        const section = document.querySelector('section');
+        section.appendChild(aHref);
         
     }
       

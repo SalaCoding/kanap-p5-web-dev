@@ -1,21 +1,11 @@
+const api = 'http://localhost:3000/api/products';
+
 //Get all the DOM necessary
 
-const productSelected = document.querySelector('cart__item__img');
 
-const cartDescription = document.querySelector('cart__item__content__description');
-//const nameProduct = cartDescription[0];
-//const colorProduct = cartDescription[1];
-//const priceProduct = cartDescription[2];
-
-/*
-*
-Set the number of the items
-*
-*/
+// Set the number of the items
 const inputQuantity = document.querySelector('.itemQuantity');
-
-const cartSettingDelete = document.querySelector('cart__item__content__settings__delete');
-//const deleteBtn = cartSettingDelete[0];
+const deleteBtn = document.getElementById('deleteItem');
 
 //Here the informations about the total of items and prices
 
@@ -53,5 +43,33 @@ const btnOrder = document.getElementById('order');
 
 inputQuantity.addEventListener('change', ($event) => {
     totalItem.textContent = $event.target.value;
-
+    
 });
+
+btnOrder.addEventListener('click', ($event) => {
+    $event.preventDefault();
+    const post = {
+        firstName: costumerName.value,
+        lastName: costumerLastName.value,
+        address: costumerAddress.value,
+        email: costumeremail.value
+    };
+});
+
+function makeRequest(data) {
+    return new Promise((resolve, reject) => {
+        let request = new XMLHttpRequest();
+        request.open('POST', api + '/create-post');
+        request.onreadystatechange = () => {
+            if (request.readyState ===4) {
+                if (request.status === 201) {
+                    resolve(JSON.parse(request.response));
+                } else {
+                    reject(JSON.parse(request.reponse));
+                }
+            }
+        };
+        request.setRequestHeader('Content-Type', 'form/json');
+        request.send(JSON.stringify(data));
+    });
+}
