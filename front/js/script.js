@@ -15,7 +15,8 @@ fetch('http://localhost:3000/api/products')
         let newParagraph = document.createElement('p');
 
         //
-        aHref.setAttribute('href', products._id);
+        aHref.setAttribute('href', `./product.html?id=42`);
+        //aHref.setAttribute('href', products._id);
         newImg.setAttribute('src', products.imageUrl);
         nameOfTheProduct.textContent = products.name;
         newParagraph.textContent = products.description;

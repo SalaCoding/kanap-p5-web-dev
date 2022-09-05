@@ -1,4 +1,3 @@
-
 //const queryStr = ('http://localhost:3000/api/products/?id', toString())
 // = ;
 //const params = new URLSearchParams('http://localhost:3000/api/products/?id')
@@ -30,13 +29,14 @@ console.log(params.toString());
             console.log(products);
 
             
-            let itemContent = document.querySelector('item');            
+            //let itemContent = document.querySelector('item');            
 
             let titleProd = document.getElementById('title');
             let priceProd = document.getElementById('price');
             let descProd = document.getElementById('description');
             let colProd = document.getElementById('colors');
 
+            getId.setAttribute('href', products._id);
             titleProd.textContent = products.name;
             priceProd.textContent = products.price;
             descProd.textContent = products.description;
