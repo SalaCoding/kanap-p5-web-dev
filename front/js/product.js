@@ -13,6 +13,7 @@
 const urlLink = 'http://localhost:3000/api/products'
 const params = new URLSearchParams(urlLink);
 const getId = params.get('_id');
+//const getImg = params.get('img');
 //const getName = params.get('name');
 //const getPrice = params.get('price');
 //const getDesc = params.get('description');
@@ -28,28 +29,36 @@ console.log(params.toString());
         for (let products of database) {
             console.log(products);
 
-            
-            //let itemContent = document.querySelector('item');            
+            //GET ACCESS TO THE DOM
+            articleCase = document.createElement('article');
+            //let divImg = document.querySelector('.item_img');
 
-            let titleProd = document.getElementById('title');
-            let priceProd = document.getElementById('price');
-            let descProd = document.getElementById('description');
-            let colProd = document.getElementById('colors');
+            //let imgProduct = document.createElement('img');
+            let titleProduct = document.getElementById('title');
+            let priceProduct = document.getElementById('price');
+            let descProduct = document.getElementById('description');
+            let colProduct = document.getElementById('colors');
 
-            getId.setAttribute('href', products._id);
-            titleProd.textContent = products.name;
-            priceProd.textContent = products.price;
-            descProd.textContent = products.description;
-            colProd.textContent = products.color;
+            
 
-            console.log(titleProd);
-            console.log(priceProd);
-        //    console.log(descProd);
-        //    console.log(colProd);
+            //imgProduct.setAttribute('src', products.imageUrl);
+
+            //INSERT DATA IN THE DOM
+            titleProduct.textContent = products.name;
+            priceProduct.textContent = products.price;
+            descProduct.textContent = products.description;
+            colProduct.textContent = products.colors;
+
+            
+
+            console.log(titleProduct);
+            console.log(priceProduct);
+            console.log(descProduct);
+            console.log(colProduct);
             
             
-            
-        //    itemContent.appendChild(item__img);
+            itemSection = document.querySelector('.item');
+            //itemSection.appendChild(item__img);
         }
     }).catch((err) =>{
         console.log(err);
