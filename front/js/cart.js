@@ -67,14 +67,6 @@ fetch('http://localhost:3000/api/products')
         console.log(totalOfPrice);
     })
     }
-
-    //Get all the DOM necessary
-
-    
-
-    
-
-
 }).catch((err) =>{
     console.log(err);
 })

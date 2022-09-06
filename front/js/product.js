@@ -1,67 +1,51 @@
-//const queryStr = ('http://localhost:3000/api/products/?id', toString())
-// = ;
-//const params = new URLSearchParams('http://localhost:3000/api/products/?id')
-//fetch(params).then(function (response) {
-//    return response.text();
-//})   
-//.then(function (text) {
-//    console.log(text);
-//})
 
-//console.log(params);
-
-const urlLink = 'http://localhost:3000/api/products'
-const params = new URLSearchParams(urlLink);
+const params = new URLSearchParams(window.location.search);
+console.log(askId = params.has('id'));
 const getId = params.get('_id');
-//const getImg = params.get('img');
-//const getName = params.get('name');
-//const getPrice = params.get('price');
-//const getDesc = params.get('description');
-//const getColor = params.get('colors');
-//const getAlt = params.get('altTxt');
-
 console.log(params.toString());
+const urlparams = 'http://localhost:3000/api/products/?${productsId}'
 
-    fetch(urlLink).then((data) => {
-        return data.json();
+
+fetch(urlparams).then((data) => {
+    return data.json();
     }).then(database => {
-        
-        for (let products of database) {
-            console.log(products);
+    
+    for (let product of database) {
+    //    console.log(product);
 
-            //GET ACCESS TO THE DOM
-            articleCase = document.createElement('article');
-            //let divImg = document.querySelector('.item_img');
+        //GET ACCESS TO THE DOM
+        //let articleCase = document.createElement('article');
+        //let divImg = document.querySelector('.item_img');
 
-            //let imgProduct = document.createElement('img');
-            let titleProduct = document.getElementById('title');
-            let priceProduct = document.getElementById('price');
-            let descProduct = document.getElementById('description');
-            let colProduct = document.getElementById('colors');
+        let imgProduct = document.createElement('img');
+        let titleProduct = document.getElementById('title');
+        let priceProduct = document.getElementById('price');
+        let descProduct = document.getElementById('description');
+        let colProduct = document.getElementById('colors');
 
-            
+        //imgProduct.setAttribute('src', product.imageUrl);
 
-            //imgProduct.setAttribute('src', products.imageUrl);
+        //INSERT DATA IN THE DOM
+        titleProduct.innerHTML = product.imageUrl;
+        titleProduct.innerHTML = product.name;
+        priceProduct.innerHTML = product.price;
+        descProduct.innerHTML = product.description;
+        colProduct.innerHTML = product.colors;
 
-            //INSERT DATA IN THE DOM
-            titleProduct.textContent = products.name;
-            priceProduct.textContent = products.price;
-            descProduct.textContent = products.description;
-            colProduct.textContent = products.colors;
+        console.log(imgProduct);
+        console.log(titleProduct);
+        console.log(priceProduct);
+        console.log(descProduct);
+        console.log(colProduct);
 
-            
-
-            console.log(titleProduct);
-            console.log(priceProduct);
-            console.log(descProduct);
-            console.log(colProduct);
-            
-            
-            itemSection = document.querySelector('.item');
-            //itemSection.appendChild(item__img);
-        }
-    }).catch((err) =>{
-        console.log(err);
-    })
-  
+    }
+}).catch((err) =>{
+    console.log(err);
+})
+ 
+    //BUTTONS
+    const addToCart = document.getElementById('addToCart');
+    addToCart.addEventListener("click", () => {
+        window.location.href = "./cart.html";
+      });
 console.log(params);
