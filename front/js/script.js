@@ -1,12 +1,12 @@
 fetch('http://localhost:3000/api/products')
-.then((data) => {
+.then(data => {
     console.log(data)
     return data.json();
-}).then((updateData) =>{
-    console.log(updateData);
+}).then(update =>{
+    console.log(update);
 
     //FOR LOOP OF
-    for (let products of updateData) {
+    for (let products of update) {
         
         let aHref = document.createElement('a');
         let newArticle = document.createElement('article');
@@ -14,8 +14,9 @@ fetch('http://localhost:3000/api/products')
         let nameOfTheProduct = document.createElement('h3');
         let newParagraph = document.createElement('p');
 
-        //
+        //Links
         aHref.setAttribute('href', `./product.html?id=${products._id}`);
+        
         //aHref.setAttribute('href', products._id);
         newImg.setAttribute('src', products.imageUrl);
         nameOfTheProduct.textContent = products.name;
