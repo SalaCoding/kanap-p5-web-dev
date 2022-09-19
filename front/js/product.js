@@ -34,6 +34,14 @@ fetch(urlparams + productId)
       for (i = 0; i < data.colors.length; i++) {
         color.innerHTML += `<option value="${data.colors[i]}">${data.colors[i]}</option>`;
       }
+    
+     //NUMBER HANDLER
+   const quantityNum=  document.getElementById('quantity');
+   quantityNum.addEventListener('input', function() {
+    let valueNumber = quantityNum.value;
+
+    console.log(valueNumber);
+   })
 
 });
 
@@ -41,12 +49,5 @@ fetch(urlparams + productId)
 const addToCart = document.getElementById('addToCart');
 addToCart.addEventListener("click", () => {
 
-    
-        //NUMBER HANDLER
-    document.getElementById('quantity').value;
-
-    //OTHER DATA
-
-    
     window.location.href = "./cart.html";
 });
