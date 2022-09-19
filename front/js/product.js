@@ -1,6 +1,5 @@
 let urlparams = 'http://localhost:3000/api/products/';
 console.log(urlparams);
-let product = {};
 
 const params = new URLSearchParams(window.location.search);
 const productId = params.get('id');
@@ -30,4 +29,24 @@ fetch(urlparams + productId)
     document.getElementById("price").textContent = data.price;
     document.getElementById("description").textContent = data.description;
 
+    //Color handler
+    const color = document.getElementById("colors");
+      for (i = 0; i < data.colors.length; i++) {
+        color.innerHTML += `<option value="${data.colors[i]}">${data.colors[i]}</option>`;
+      }
+
+});
+
+//BUTTON HANDLE LOCALSTOREGE
+const addToCart = document.getElementById('addToCart');
+addToCart.addEventListener("click", () => {
+
+    
+        //NUMBER HANDLER
+    document.getElementById('quantity').value;
+
+    //OTHER DATA
+
+    
+    window.location.href = "./cart.html";
 });
