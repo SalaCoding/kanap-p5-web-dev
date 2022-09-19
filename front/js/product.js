@@ -12,42 +12,60 @@ fetch(urlparams + productId)
 .then((response) => response.json())
 .then((data) => {
 
-    //const imgBox = document.querySelector('.item__img');
-    //const imgProduct = document.querySelector('img');
+    if(window.localStorage) {
+            //const imgBox = document.querySelector('.item__img');
+        //const imgProduct = document.querySelector('img');
 
-    document.querySelector(".item__img")
-    .innerHTML = `<img src="${data.imageUrl}" alt="${data.altTxt}">`;
+        const imgUrl = document.querySelector(".item__img")
+        imgUrl.innerHTML = `<img src="${data.imageUrl}" alt="${data.altTxt}">`;
+        
+        //imgProduct.alt = data.altTxt;
+        //imgProduct.src = data.imageUrl;
+
+        //imgProduct.setAttribute('src', data.imageUrl);
+        //imgProduct.setAttribute('alt', data.altTxt);
+        //imgBox.appendChild(imgProduct);
+
+        const productTitle = document.getElementById("title");
+        productTitle.textContent =  data.name;
+
+        const productPrice = document.getElementById("price");
+        productPrice.textContent = data.price;
+
+        const productDescription = document.getElementById("description");
+        productDescription.textContent = data.description;
+
+        //Color handler
+        const color = document.getElementById("colors");
+            for (i = 0; i < data.colors.length; i++) {
+            color.innerHTML += `<option value="${data.colors[i]}">${data.colors[i]}</option>`;
+        }
     
-    //imgProduct.alt = data.altTxt;
-    //imgProduct.src = data.imageUrl;
+        //NUMBER HANDLER
+        const quantityNum=  document.getElementById('quantity');
+        quantityNum.addEventListener('input', function() {
+            let valueNumber = quantityNum.value;
 
-    //imgProduct.setAttribute('src', data.imageUrl);
-    //imgProduct.setAttribute('alt', data.altTxt);
-    //imgBox.appendChild(imgProduct);
+            console.log(valueNumber);
+        })
 
-    document.getElementById("title").textContent =  data.name;
-    document.getElementById("price").textContent = data.price;
-    document.getElementById("description").textContent = data.description;
+        //BUTTON HANDLE LOCALSTOREGE
+        const addToCart = document.getElementById('addToCart');
+        addToCart.addEventListener("click", () => {
+        window.location.href = "./cart.html";
 
-    //Color handler
-    const color = document.getElementById("colors");
-      for (i = 0; i < data.colors.length; i++) {
-        color.innerHTML += `<option value="${data.colors[i]}">${data.colors[i]}</option>`;
-      }
-    
-     //NUMBER HANDLER
-   const quantityNum=  document.getElementById('quantity');
-   quantityNum.addEventListener('input', function() {
-    let valueNumber = quantityNum.value;
+            //LOCALSTIRAGE
+            localStorage.setItem('img', imgUrl);
+            localStorage.setItem('name', productTitle);
+            localStorage.setItem('price', productPrice);
+            localStorage.setItem('desc', productDescription);
+            localStorage.setItem('color', color);
+            localStorage.setItem('quantity', quantityNum);
 
-    console.log(valueNumber);
-   })
+            let productData = sessionStorage.getItem('name');
 
-});
+            console.log(productData)
+        });
+    }
 
-//BUTTON HANDLE LOCALSTOREGE
-const addToCart = document.getElementById('addToCart');
-addToCart.addEventListener("click", () => {
-
-    window.location.href = "./cart.html";
 });
