@@ -51,28 +51,25 @@ fetch(urlparams + productId)
         const addToCart = document.getElementById('addToCart');
         addToCart.addEventListener("click", () => {
             
-        
-        /**
-         * LOCALSTORAGE
-         * I CREATE OBJECT
-         */
-        ApiData = {
+        //LOCALSTIRAGE
+        apiSelected = {
             id: productId,
-            img: imgUrl.textContent,
-            name: productTitle.textContent,
-            price: productPrice.textContent,
-            desc: productDescription.textContent,
             color: color.value,
             quantity: quantityNum.value
     }
-    console.log(ApiData);
 
-    //SAVE THE OBJECT INTO THE STORAGE
-    localStorage.setItem('anotherSession', JSON.stringify(ApiData));
-    //RETRIEVE THE DATA OBJECT FROM THE STORAGE
-    const anotherSessionData = localStorage.getItem('ApiData');
-    console.log('anotherSessionData: ', JSON.parse(anotherSessionData));
+        console.log(apiSelected);
+         //
+         /**
+          * SAVE THE OBJECT INTO THE STORAGE
+          * I store data in STORAGEFILE
+          */
+        sessionStorage.setItem('storageFile', JSON.stringify(apiSelected));
+        //RETRIEVE THE DATA OBJECT FROM THE STORAGE
+        const sessionData = JSON.parse(sessionStorage.getItem('stoageFile'));
     
+        console.log(typeof sessionData);
+
             window.location.href = "./cart.html";
         });
 });
