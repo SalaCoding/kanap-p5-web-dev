@@ -11,12 +11,10 @@ console.log(productId);
 fetch(urlparams + productId)
 .then((response) => response.json())
 .then((data) => {
-
-    if(window.localStorage) {
             //const imgBox = document.querySelector('.item__img');
         //const imgProduct = document.querySelector('img');
 
-        const imgUrl = document.querySelector(".item__img")
+        const imgUrl = document.querySelector(".item__img");
         imgUrl.innerHTML = `<img src="${data.imageUrl}" alt="${data.altTxt}">`;
         
         //imgProduct.alt = data.altTxt;
@@ -52,20 +50,29 @@ fetch(urlparams + productId)
         //BUTTON HANDLE LOCALSTOREGE
         const addToCart = document.getElementById('addToCart');
         addToCart.addEventListener("click", () => {
-        window.location.href = "./cart.html";
-
-            //LOCALSTIRAGE
-            localStorage.setItem('img', imgUrl);
-            localStorage.setItem('name', productTitle);
-            localStorage.setItem('price', productPrice);
-            localStorage.setItem('desc', productDescription);
-            localStorage.setItem('color', color);
-            localStorage.setItem('quantity', quantityNum);
-
-            let productData = sessionStorage.getItem('name');
-
-            console.log(productData)
-        });
+            
+        
+        /**
+         * LOCALSTORAGE
+         * I CREATE OBJECT
+         */
+        ApiData = {
+            id: productId,
+            img: imgUrl.textContent,
+            name: productTitle.textContent,
+            price: productPrice.textContent,
+            desc: productDescription.textContent,
+            color: color.value,
+            quantity: quantityNum.value
     }
+    console.log(ApiData);
 
+    //SAVE THE OBJECT INTO THE STORAGE
+    localStorage.setItem('anotherSession', JSON.stringify(ApiData));
+    //RETRIEVE THE DATA OBJECT FROM THE STORAGE
+    const anotherSessionData = localStorage.getItem('ApiData');
+    console.log('anotherSessionData: ', JSON.parse(anotherSessionData));
+    
+            window.location.href = "./cart.html";
+        });
 });
