@@ -15,10 +15,15 @@ let data;
 console.log(params)
 console.log(productId);
 
+let imageURL = "";
+let altTxt = "";
+
 fetch(urlparams + productId)
 .then((response) => response.json())
 .then((data) => {
     imgUrl.innerHTML = `<img src="${data.imageUrl}" alt="${data.altTxt}">`;
+    imageURL = data.imageUrl;
+    altTxt = data.altTxt;
     productTitle.textContent =  data.name;
     productPrice.textContent = data.price;
     productDescription.textContent = data.description;
@@ -40,9 +45,10 @@ fetch(urlparams + productId)
     //LOCALSTORAGE
     const apiSelected = {
         id: productId,
-        title: productTitle,
-        price: productPrice,
-        image: imgUrl,
+        imgUrl: imageURL,
+        img: altTxt,
+        title: productTitle.textContent,
+        price: productPrice.textContent,
         color: color.value,
         quantity: quantityNum.value,
     }
