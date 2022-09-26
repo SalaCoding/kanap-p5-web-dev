@@ -1,14 +1,35 @@
-const api = fetch('http://localhost:3000/api/products')
+ //RETRIEVE THE DATA OBJECT FROM THE STORAGE
+ const retrivStoredFile = JSON.parse(localStorage.getItem('store'));
+ console.log(retrivStoredFile);
+ 
+  //Cart content
+ const cartContent = document.getElementById('cart__item__content');
+    //Description of the product
+    const cartItemDescription = document.getElementsByClassName('cart__item__content__description');
+    //const childCartItem = cartItemDescription[0];
+    const secondChildCartItem = cartItemDescription[1];
+    const thirdChildCartItem = cartItemDescription[2];
+    //secondChildCartItem.textContent = retrivStoredFile.color;
+    //thirdChildCartItem.textContent = retrivStoredFile.price;
 
     const resetForm = document.querySelector('.cart__order__form');
     // Set the number of the items
     const inputQuantity = document.querySelector('.itemQuantity');
 //    const deleteBtn = document.getElementById('deleteItem');
+//.for (let i = 0; i < limit; i++) {
+//.    console.log(totalOfPrice.textContent += thirdChildCartItem * inputQuantity);
+//.}
 
-    //Here the informations about the total of items and prices
 
+    //Quantity of the product
     const totalItem = document.getElementById('totalQuantity');
+    totalItem.textContent = retrivStoredFile.quantity;
     const totalOfPrice = document.getElementById('totalPrice');
+    
+    //Calculation of the quantity with price
+    //for (let i = 0; i < limit; i++) {
+    //    console.log(totalOfPrice.textContent += thirdChildCartItem * inputQuantity);
+    //}
 
     const costumerName = document.getElementById('firstName');
     const costumerLastName = document.getElementById('lastName');
