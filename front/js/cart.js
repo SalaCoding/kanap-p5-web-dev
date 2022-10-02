@@ -1,8 +1,7 @@
  //RETRIEVE THE DATA OBJECT FROM THE STORAGE
- const retrivStoredFile = JSON.parse(localStorage.getItem('store'));
- console.log(retrivStoredFile)
- 
- 
+ let products = JSON.parse(localStorage.getItem('store'));
+ let cart = JSON.parse(localStorage.getItem('cart', '[]'));
+
  //GE ACCES TO THE DOM
  const cart__items = document.getElementById('cart__items');
  const cart__item = document.createElement('article');
@@ -20,20 +19,19 @@
  const cart__item__content__settings__quantity__delete = document.createElement('div');
  const p__deleteItem = document.createElement('p');
 
-
    //SETATTRIBUTE
-   cart__item.setAttribute('data', `article class="cart__item" data-id="${retrivStoredFile.productId}" data-color="${retrivStoredFile.color}" `);
-   cart__item__imgUrl.setAttribute('src', retrivStoredFile.imgUrl);
-    cart__item__imgUrl.setAttribute('alt', retrivStoredFile.altText);
+   cart__item.setAttribute('data', `article class="cart__item" data-id="${products.productId}" data-color="${products.color}" `);
+   cart__item__imgUrl.setAttribute('src', products.imgUrl);
+    cart__item__imgUrl.setAttribute('alt', products.altText);
    
     //NAME, COLOR, PRICE AND QUANTITY
-    h2.innerText = retrivStoredFile.title;
-    p__color.textContent = retrivStoredFile.color;
-    p__price.textContent = '€' + retrivStoredFile.price;
+    h2.innerText = products.title;
+    p__color.textContent = products.color;
+    p__price.textContent = '€' + products.price;
     qte.textContent = 'Qte : ';
     
     //INPUT RECEIVE VALUE AND CAN BE ADJUST
-    input.value = retrivStoredFile.quantity;
+    input.value = products.quantity;
     input.setAttribute("type", "number");
     input.setAttribute("min", "1");
     input.setAttribute("max", "100");
@@ -70,6 +68,7 @@
 
     cart__items.appendChild(cart__item);
 
+   
    //GET ACCESS TO THE DOM  AND VALUE 
    const firstName = document.getElementById('firstName').value;
    const lastName = document.getElementById('lastName').value;
@@ -81,3 +80,4 @@
    
 
    
+ 

@@ -44,7 +44,6 @@ fetch(urlparams + productId)
     
     /**
      * LOCALSTORAGE
-     * 
      * Created object of product
      */
     const apiSelected = {
@@ -60,7 +59,12 @@ fetch(urlparams + productId)
           * SAVE THE OBJECT INTO THE STORAGE
           * I STORE APISELECTED IN STORE
           */
-    localStorage.setItem('store', JSON.stringify(apiSelected));
+        
+        localStorage.setItem('store', JSON.stringify(apiSelected));
+        if(!localStorage.getItem("cart")){
+            localStorage.setItem("cart", "[]");
+        }
+    //localStorage.setItem('store', JSON.stringify(apiSelected));
 
     window.location.href = "./cart.html";
     });
