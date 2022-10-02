@@ -42,7 +42,11 @@ fetch(urlparams + productId)
     const addToCart = document.getElementById('addToCart');
     addToCart.addEventListener("click", () => {
     
-    //LOCALSTORAGE
+    /**
+     * LOCALSTORAGE
+     * 
+     * Created object of product
+     */
     const apiSelected = {
         id: productId,
         imgUrl: imageURL,

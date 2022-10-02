@@ -19,18 +19,20 @@
  const input = document.createElement('input');
  const cart__item__content__settings__quantity__delete = document.createElement('div');
  const p__deleteItem = document.createElement('p');
- 
 
-    cart__item.setAttribute('data', `article class="cart__item" data-id="${retrivStoredFile.productId}" data-color="${retrivStoredFile.color}" `);
-    console.log(cart__item__imgUrl.setAttribute('src', retrivStoredFile.imgUrl));
-    
-    //cart__item__imgUrl.innerHTML = `<img src="${retrivStoredFile.imgUrl}" alt="${retrivStoredFile.altTxt}">`;
+
+   //SETATTRIBUTE
+   cart__item.setAttribute('data', `article class="cart__item" data-id="${retrivStoredFile.productId}" data-color="${retrivStoredFile.color}" `);
+   cart__item__imgUrl.setAttribute('src', retrivStoredFile.imgUrl);
+    cart__item__imgUrl.setAttribute('alt', retrivStoredFile.altText);
+   
+    //NAME, COLOR, PRICE AND QUANTITY
     h2.innerText = retrivStoredFile.title;
     p__color.textContent = retrivStoredFile.color;
     p__price.textContent = '€' + retrivStoredFile.price;
     qte.textContent = 'Qte : ';
     
-    //console.log(input.innerHTML = retrivStoredFile.quantity);
+    //INPUT RECEIVE VALUE AND CAN BE ADJUST
     input.value = retrivStoredFile.quantity;
     input.setAttribute("type", "number");
     input.setAttribute("min", "1");
@@ -38,19 +40,19 @@
     input.setAttribute("name", "itemQuantity");
 
     p__deleteItem.textContent = 'Delete';
-
-    
-
+   
+    //CLASSNAME TO APPLY THE CSS OF CLASS
     cart__item.className = 'cart__item';
     cart__item__img.className = 'cart__item__img';
     cart__item__content.className = 'cart__item__content';
     cart__item__content__description.className = 'cart__item__content__description';
     cart__item__content__settings.className = 'cart__item__content__settings';
     cart__item__content__settings__quantity.className = 'cart__item__content__settings__quantity';
-    //input.className = 'itemQuantity';
+    input.className = 'itemQuantity';
     cart__item__content__settings__quantity__delete.className = 'cart__item__content__settings__quantity__delete';
     p__deleteItem.className = 'deleteItem';
 
+    //APPENCHILD TO INSERT THE ELEMENT CREATED
  cart__items.appendChild(cart__item);
     cart__item.appendChild(cart__item__img);
     cart__item__img.appendChild(cart__item__imgUrl);
@@ -67,3 +69,15 @@
     cart__item__content__settings__quantity__delete.appendChild(p__deleteItem);
 
     cart__items.appendChild(cart__item);
+
+   //GET ACCESS TO THE DOM  AND VALUE 
+   const firstName = document.getElementById('firstName').value;
+   const lastName = document.getElementById('lastName').value;
+   const address = document.getElementById('address').value;
+   const city = document.getElementById('city').value;
+   const email = document.getElementById('email').value;
+
+
+   
+
+   
