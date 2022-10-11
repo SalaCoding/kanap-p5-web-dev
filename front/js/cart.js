@@ -1,6 +1,15 @@
- //RETRIEVE THE DATA OBJECT FROM THE STORAGE
- let products = JSON.parse(localStorage.getItem('store'));
- let cart = JSON.parse(localStorage.getItem('cart', '[]'));
+// SETTING GLOBAL VARIABLE SO WE CAN ACCESS IT  .
+const products = JSON.parse(localStorage.getItem("products"));
+
+//Declare the the empty variable
+const cart = [];
+// Retrieve the object from storage or the object is empty
+cart = JSON.parse(localStorage.getItem('cart')) || [];
+// Push the new data onto the array
+cart.push(products);
+// Put the object back into storage
+localStorage.setItem('cart', JSON.stringify(cart));
+
 
  //GE ACCES TO THE DOM
  const cart__items = document.getElementById('cart__items');
@@ -19,8 +28,12 @@
  const cart__item__content__settings__quantity__delete = document.createElement('div');
  const p__deleteItem = document.createElement('p');
 
-   //SETATTRIBUTE
-   cart__item.setAttribute('data', `article class="cart__item" data-id="${products.productId}" data-color="${products.color}" `);
+   for (products of products) {
+      //SETATTRIBUTE
+   cart__item.setAttribute('data', products.id);
+   cart__item.setAttribute('data-color', products.color);
+  console.log(cart__item)
+
    cart__item__imgUrl.setAttribute('src', products.imgUrl);
     cart__item__imgUrl.setAttribute('alt', products.altText);
    
@@ -38,6 +51,7 @@
     input.setAttribute("name", "itemQuantity");
 
     p__deleteItem.textContent = 'Delete';
+
    
     //CLASSNAME TO APPLY THE CSS OF CLASS
     cart__item.className = 'cart__item';
@@ -67,6 +81,7 @@
     cart__item__content__settings__quantity__delete.appendChild(p__deleteItem);
 
     cart__items.appendChild(cart__item);
+   }
 
    
    //GET ACCESS TO THE DOM  AND VALUE 
@@ -75,9 +90,3 @@
    const address = document.getElementById('address').value;
    const city = document.getElementById('city').value;
    const email = document.getElementById('email').value;
-
-
-   
-
-   
- 

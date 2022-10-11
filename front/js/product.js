@@ -11,9 +11,7 @@ const productDescription = document.getElementById("description");
 const color = document.getElementById("colors");
 const quantityNum =  document.getElementById('quantity');
 
-let data;
 console.log(params)
-console.log(productId);
 
 let imageURL = "";
 let altTxt = "";
@@ -46,7 +44,7 @@ fetch(urlparams + productId)
      * LOCALSTORAGE
      * Created object of product
      */
-    const apiSelected = {
+    const product = {
         id: productId,
         imgUrl: imageURL,
         img: altTxt,
@@ -55,16 +53,9 @@ fetch(urlparams + productId)
         color: color.value,
         quantity: quantityNum.value,
     }
-        /**
-          * SAVE THE OBJECT INTO THE STORAGE
-          * I STORE APISELECTED IN STORE
-          */
-        
-        localStorage.setItem('store', JSON.stringify(apiSelected));
-        if(!localStorage.getItem("cart")){
-            localStorage.setItem("cart", "[]");
-        }
-    //localStorage.setItem('store', JSON.stringify(apiSelected));
-
-    window.location.href = "./cart.html";
+    
+    localStorage.setItem('products', JSON.stringify(product));
+    
+    cart = JSON.parse(localStorage.getItem("cart"));
+        window.location.href = "./cart.html";
     });
