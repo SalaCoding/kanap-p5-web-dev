@@ -1,8 +1,8 @@
 // SETTING GLOBAL VARIABLE SO WE CAN ACCESS IT  .
-const products = JSON.parse(localStorage.getItem("products"));
+let products = JSON.parse(localStorage.getItem("products"));
 
 //Declare the the empty variable
-const cart = [];
+let cart = [];
 // Retrieve the object from storage or the object is empty
 cart = JSON.parse(localStorage.getItem('cart')) || [];
 // Push the new data onto the array
@@ -28,7 +28,6 @@ localStorage.setItem('cart', JSON.stringify(cart));
  const cart__item__content__settings__quantity__delete = document.createElement('div');
  const p__deleteItem = document.createElement('p');
 
-   for (products of products) {
       //SETATTRIBUTE
    cart__item.setAttribute('data', products.id);
    cart__item.setAttribute('data-color', products.color);
@@ -81,7 +80,6 @@ localStorage.setItem('cart', JSON.stringify(cart));
     cart__item__content__settings__quantity__delete.appendChild(p__deleteItem);
 
     cart__items.appendChild(cart__item);
-   }
 
    
    //GET ACCESS TO THE DOM  AND VALUE 
