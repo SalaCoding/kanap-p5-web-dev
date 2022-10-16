@@ -28,11 +28,18 @@ localStorage.setItem('cart', JSON.stringify(cart));
  const cart__item__content__settings__quantity__delete = document.createElement('div');
  const p__deleteItem = document.createElement('p');
 
-      //SETATTRIBUTE
+ /**
+  * RETRIVE ONLY A SINGLE PRODUCT
+  * 
+  * SETATTRIBUTE
+  * NAME, COLOR, PRICE AND QUANTITY
+  * INPUT RECEIVE VALUE AND CAN BE ADJUST
+  * CLASSNAME TO APPLY THE CSS OF CLASS
+  * APPENCHILD TO INSERT THE ELEMENT CREATED
+  */
    cart__item.setAttribute('data', products.id);
    cart__item.setAttribute('data-color', products.color);
   console.log(cart__item)
-  
   
    cart__item__imgUrl.setAttribute('src', products.imgUrl);
    cart__item__imgUrl.setAttribute('alt', products.altText);
@@ -52,7 +59,6 @@ localStorage.setItem('cart', JSON.stringify(cart));
 
     p__deleteItem.textContent = 'Delete';
 
-   
     //CLASSNAME TO APPLY THE CSS OF CLASS
     cart__item.className = 'cart__item';
     cart__item__img.className = 'cart__item__img';
@@ -82,9 +88,17 @@ localStorage.setItem('cart', JSON.stringify(cart));
 
     cart__items.appendChild(cart__item);
 
-    content = "";
+    //GET ACCESS TO THE DOM
+   //let cart__price = document.getElementById('cart__price');
+   let totalQuantity = document.getElementById('totalQuantity');
+   let totalPrice = document.getElementById('totalPrice');
+
+    let content = '';
     for (let i = 0; i < cart.length; i++) {
       const item = cart[i];
+    
+      totalQuantity.textContent = cart[i].length;
+      
       content += `
       <article class="cart__item" data-id="${item.id}" data-color="${item.color}">
       <div class="cart__item__img">
@@ -106,8 +120,7 @@ localStorage.setItem('cart', JSON.stringify(cart));
         </div>
       </div>
     </div>
-    </article>
-         `;
+    </article>`;
     }
     cart__items.innerHTML = content;
 

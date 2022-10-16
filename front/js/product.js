@@ -53,7 +53,7 @@ fetch(urlparams + productId)
         color: color.value,
         quantity: quantityNum.value,
     }
-    
+    //Store object data in the localstorage.
     localStorage.setItem('products', JSON.stringify(product));
     
     cart = JSON.parse(localStorage.getItem("cart"));
