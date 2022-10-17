@@ -19,8 +19,8 @@ localStorage.setItem('cart', JSON.stringify(cart));
  const cart__item__content = document.createElement('div');
  const cart__item__content__description = document.createElement('div');
  const h2 = document.createElement('h2');
- const p__color = document.createElement('p');
- const p__price = document.createElement('p');
+ let color = document.createElement('p');
+ let price = document.createElement('p');
  const cart__item__content__settings = document.createElement('div');
  const cart__item__content__settings__quantity = document.createElement('div');
  const qte = document.createElement('p');
@@ -39,15 +39,15 @@ localStorage.setItem('cart', JSON.stringify(cart));
   */
    cart__item.setAttribute('data', products.id);
    cart__item.setAttribute('data-color', products.color);
-  console.log(cart__item)
+  //console.log(cart__item)
   
    cart__item__imgUrl.setAttribute('src', products.imgUrl);
    cart__item__imgUrl.setAttribute('alt', products.altText);
    
     //NAME, COLOR, PRICE AND QUANTITY
     h2.innerText = products.title;
-    p__color.textContent = products.color;
-    p__price.textContent = '€' + products.price;
+    color.textContent = products.color;
+    price.textContent = '€' + products.price;
     qte.textContent = 'Qte : ';
     
     //INPUT RECEIVE VALUE AND CAN BE ADJUST
@@ -77,8 +77,8 @@ localStorage.setItem('cart', JSON.stringify(cart));
     cart__item.appendChild(cart__item__content);
     cart__item__content.appendChild(cart__item__content__description);
     cart__item__content__description.appendChild(h2);
-    cart__item__content__description.appendChild(p__color);
-    cart__item__content__description.appendChild(p__price);
+    cart__item__content__description.appendChild(color);
+    cart__item__content__description.appendChild(price);
     cart__item__content.appendChild(cart__item__content__settings);
     cart__item__content__settings.appendChild(cart__item__content__settings__quantity);
     cart__item__content__settings__quantity.appendChild(qte);
@@ -93,14 +93,21 @@ localStorage.setItem('cart', JSON.stringify(cart));
    let totalQuantity = document.getElementById('totalQuantity');
    let totalPrice = document.getElementById('totalPrice');
 
-    let content = '';
+      let content = '';
+      let productId = '';
+      let quantity = '';
     for (let i = 0; i < cart.length; i++) {
       const item = cart[i];
-    
-      totalQuantity.textContent = cart[i].length;
+    console.log(item)
+
+    console.log(productId.id = cart[i].id);
+      //console.log(color.color = cart[i].color);
+
+      //Displaying number of articles
+      totalQuantity.textContent = cart.length;
       
       content += `
-      <article class="cart__item" data-id="${item.id}" data-color="${item.color}">
+      <article class="cart__item" data-id="${productId}" data-color="${item.color}">
       <div class="cart__item__img">
       <img src="${item.imgUrl}" alt="${item.altText}">
     </div>
@@ -108,7 +115,7 @@ localStorage.setItem('cart', JSON.stringify(cart));
       <div class="cart__item__content__description">
         <h2>${item.title}</h2>
         <p>${item.color}</p>
-        <p>${item.price}</p>
+        <p>€ ${item.price}</p>
       </div>
       <div class="cart__item__content__settings">
         <div class="cart__item__content__settings__quantity">
@@ -123,6 +130,9 @@ localStorage.setItem('cart', JSON.stringify(cart));
     </article>`;
     }
     cart__items.innerHTML = content;
+
+    //Function of total
+
 
    //GET ACCESS TO THE DOM  AND VALUE 
    const firstName = document.getElementById('firstName').value;
