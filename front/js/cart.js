@@ -24,7 +24,7 @@ localStorage.setItem('cart', JSON.stringify(cart));
  const cart__item__content__settings = document.createElement('div');
  const cart__item__content__settings__quantity = document.createElement('div');
  const qte = document.createElement('p');
- const input = document.createElement('input');
+ let input = document.createElement('input');
  const cart__item__content__settings__quantity__delete = document.createElement('div');
  const p__deleteItem = document.createElement('p');
 
@@ -93,15 +93,30 @@ localStorage.setItem('cart', JSON.stringify(cart));
    let totalQuantity = document.getElementById('totalQuantity');
    let totalPrice = document.getElementById('totalPrice');
 
-      let content = '';
-      let productId = '';
-      let quantity = '';
+    let content = '';
+    let productId = '';
     for (let i = 0; i < cart.length; i++) {
       const item = cart[i];
-    console.log(item)
 
-    console.log(productId.id = cart[i].id);
-      //console.log(color.color = cart[i].color);
+      productId.id = cart[i].id;
+      
+      // Finding product object with id
+      let searchObject = cart.findIndex(function(item){
+        return item.id == cart[i].id;
+      });
+      console.log(cart[searchObject].id)
+      console.log(cart[searchObject].color)
+      if(cart.length == 0){
+        cart.push(searchObject);
+          
+     }else{
+      let res = cart.findIndex(element => element.id == cart[i].id);
+      if(res === undefined){
+         cart.push(searchObject);
+         console.log(res)
+      }
+   }
+   //localStorage.setItem("cart", JSON.stringify(cart));
 
       //Displaying number of articles
       totalQuantity.textContent = cart.length;
@@ -132,7 +147,17 @@ localStorage.setItem('cart', JSON.stringify(cart));
     cart__items.innerHTML = content;
 
     //Function of total
-
+    function cartQuantity() {
+      for (let i = 0; i < input.length; i++) {
+        input[i].addEventListener("change", (event) => {
+          event.preventDefault();
+          cart[i].quantity = Number(input[i].value) // We replace the quantity of product by the new quantity selected in the localStorage
+          localStorage.setItem("cart", JSON.stringify(cart));
+          location.reload();
+        });
+      }
+    }
+    cartQuantity()
 
    //GET ACCESS TO THE DOM  AND VALUE 
    const firstName = document.getElementById('firstName').value;
