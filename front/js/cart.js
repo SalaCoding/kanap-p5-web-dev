@@ -151,7 +151,7 @@ localStorage.setItem('cart', JSON.stringify(cart));
       for (let i = 0; i < input.length; i++) {
         input[i].addEventListener("change", (event) => {
           event.preventDefault();
-          cart[i].quantity = Number(input[i].value) // We replace the quantity of product by the new quantity selected in the localStorage
+          cart[i].quantity = (input[i].value) 
           localStorage.setItem("cart", JSON.stringify(cart));
           location.reload();
         });
