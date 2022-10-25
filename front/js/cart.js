@@ -1,34 +1,30 @@
 // SETTING GLOBAL VARIABLE SO WE CAN ACCESS IT  .
 let products = JSON.parse(localStorage.getItem("products"));
 
-//Declare the the empty variable
-let cart = [];
-// Retrieve the object from storage or the object is empty
-cart = JSON.parse(localStorage.getItem('cart')) || [];
-// Push the new data onto the array
-cart.push(products);
-// Put the object back into storage
-localStorage.setItem('cart', JSON.stringify(cart));
+//GE ACCES TO THE DOM
+const cart__items = document.getElementById('cart__items');
+const cart__item = document.createElement('article');
+const cart__item__img = document.createElement('div');
+const cart__item__imgUrl = document.createElement('img');
+const cart__item__content = document.createElement('div');
+const cart__item__content__description = document.createElement('div');
+const h2 = document.createElement('h2');
+let color = document.createElement('p');
+let price = document.createElement('p');
+const cart__item__content__settings = document.createElement('div');
+const cart__item__content__settings__quantity = document.createElement('div');
+const qty = document.createElement('p');
+let input = document.createElement('input');
+const cart__item__content__settings__quantity__delete = document.createElement('div');
+const p__deleteItem = document.createElement('p');
+let productId;
 
+    //GET ACCESS TO THE DOM
+  //let cart__price = document.getElementById('cart__price');
+  let totalQuantity = document.getElementById('totalQuantity');
+  let totalPrice = document.getElementById('totalPrice');
 
- //GE ACCES TO THE DOM
- const cart__items = document.getElementById('cart__items');
- const cart__item = document.createElement('article');
- const cart__item__img = document.createElement('div');
- const cart__item__imgUrl = document.createElement('img');
- const cart__item__content = document.createElement('div');
- const cart__item__content__description = document.createElement('div');
- const h2 = document.createElement('h2');
- let color = document.createElement('p');
- let price = document.createElement('p');
- const cart__item__content__settings = document.createElement('div');
- const cart__item__content__settings__quantity = document.createElement('div');
- const qte = document.createElement('p');
- let input = document.createElement('input');
- const cart__item__content__settings__quantity__delete = document.createElement('div');
- const p__deleteItem = document.createElement('p');
-
- /**
+  /**
   * RETRIVE ONLY A SINGLE PRODUCT
   * 
   * SETATTRIBUTE
@@ -37,9 +33,8 @@ localStorage.setItem('cart', JSON.stringify(cart));
   * CLASSNAME TO APPLY THE CSS OF CLASS
   * APPENCHILD TO INSERT THE ELEMENT CREATED
   */
-   cart__item.setAttribute('data', products.id);
-   cart__item.setAttribute('data-color', products.color);
-  //console.log(cart__item)
+  cart__item.setAttribute('data-id', products.id);
+  cart__item.setAttribute('data-color', products.color);
   
    cart__item__imgUrl.setAttribute('src', products.imgUrl);
    cart__item__imgUrl.setAttribute('alt', products.altText);
@@ -48,7 +43,7 @@ localStorage.setItem('cart', JSON.stringify(cart));
     h2.innerText = products.title;
     color.textContent = products.color;
     price.textContent = '€' + products.price;
-    qte.textContent = 'Qte : ';
+    qty.textContent = 'Qte : ';
     
     //INPUT RECEIVE VALUE AND CAN BE ADJUST
     input.value = products.quantity;
@@ -81,54 +76,45 @@ localStorage.setItem('cart', JSON.stringify(cart));
     cart__item__content__description.appendChild(price);
     cart__item__content.appendChild(cart__item__content__settings);
     cart__item__content__settings.appendChild(cart__item__content__settings__quantity);
-    cart__item__content__settings__quantity.appendChild(qte);
+    cart__item__content__settings__quantity.appendChild(qty);
     cart__item__content__settings__quantity.appendChild(input);
     cart__item__content__settings.appendChild(cart__item__content__settings__quantity__delete);
     cart__item__content__settings__quantity__delete.appendChild(p__deleteItem);
 
     cart__items.appendChild(cart__item);
 
-    //GET ACCESS TO THE DOM
-   //let cart__price = document.getElementById('cart__price');
-   let totalQuantity = document.getElementById('totalQuantity');
-   let totalPrice = document.getElementById('totalPrice');
+  //ADD MORE ITEM IN THE CART
+  //Declare the the empty variable
+//let cart = [];
+// Retrieve the object from storage or the object is empty
+cart = JSON.parse(localStorage.getItem('cart')) || [];
+// Push the new data onto the array
+  cart.push(products)
+// Put the object back into storage
+localStorage.setItem('cart', JSON.stringify(cart));
 
-    let content = '';
-    let productId = '';
+if (cart.length !== 0) {
+  foundId = cart.find((productId) => productId === productId && color === color);
+}
+    //console.log(foundId)  
+  let content = '';
     for (let i = 0; i < cart.length; i++) {
-      const item = cart[i];
-
-      productId.id = cart[i].id;
+      let item = cart[i];
       
-      // Finding product object with id
-      let searchObject = cart.findIndex(function(item){
-        return item.id == cart[i].id;
-      });
-      console.log(cart[searchObject].id)
-      console.log(cart[searchObject].color)
-      if(cart.length == 0){
-        cart.push(searchObject);
-          
-     }else{
-      let res = cart.findIndex(element => element.id == cart[i].id);
-      if(res === undefined){
-         cart.push(searchObject);
-         console.log(res)
-      }
-   }
-   //localStorage.setItem("cart", JSON.stringify(cart));
+      productId = item.id;
+      color = item.color;
 
       //Displaying number of articles
       totalQuantity.textContent = cart.length;
-      
-      content += `
-      <article class="cart__item" data-id="${productId}" data-color="${item.color}">
+
+        content += `
+      <article class="cart__item" data-id="${item.id}" data-color="${item.color}">
       <div class="cart__item__img">
       <img src="${item.imgUrl}" alt="${item.altText}">
     </div>
     <div class="cart__item__content">
       <div class="cart__item__content__description">
-        <h2>${item.title}</h2>
+        <h2>${item.title}</h2> 
         <p>${item.color}</p>
         <p>€ ${item.price}</p>
       </div>
@@ -143,21 +129,11 @@ localStorage.setItem('cart', JSON.stringify(cart));
       </div>
     </div>
     </article>`;
-    }
-    cart__items.innerHTML = content;
-
-    //Function of total
-    function cartQuantity() {
-      for (let i = 0; i < input.length; i++) {
-        input[i].addEventListener("change", (event) => {
-          event.preventDefault();
-          cart[i].quantity = (input[i].value) 
-          localStorage.setItem("cart", JSON.stringify(cart));
-          location.reload();
-        });
       }
-    }
-    cartQuantity()
+    cart__items.innerHTML = content;
+    console.log(cart__items);
+      
+
 
    //GET ACCESS TO THE DOM  AND VALUE 
    const firstName = document.getElementById('firstName').value;

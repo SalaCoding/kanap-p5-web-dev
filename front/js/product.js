@@ -8,8 +8,11 @@ const imgUrl = document.querySelector(".item__img");
 const productTitle = document.getElementById("title");
 const productPrice = document.getElementById("price");
 const productDescription = document.getElementById("description");
-const color = document.getElementById("colors");
+let color = document.getElementById("colors");
 const quantityNum =  document.getElementById('quantity');
+let quantity;
+let foundId;
+let products
 
 console.log(params)
 
@@ -26,20 +29,25 @@ fetch(urlparams + productId)
     productPrice.textContent = data.price;
     productDescription.textContent = data.description;
         //Color handler
-            for (let i = 0; i < data.colors.length; i++) {
+        for (let i = 0; i < data.colors.length; i++) {
             color.innerHTML += `<option value="${data.colors[i]}">${data.colors[i]}</option>`;
         }
         //NUMBER HANDLER
         quantityNum.addEventListener('input', function() {
-            let valueNumber = quantityNum.value;
-            console.log(valueNumber);
+            quantity = quantityNum.value;
+            console.log(quantity);
         })
 });
 
-    //BUTTON HANDLE LOCALSTOREGE
-    const addToCart = document.getElementById('addToCart');
-    addToCart.addEventListener("click", () => {
-    
+//BUTTON HANDLE LOCALSTOREGE
+const addToCart = document.getElementById('addToCart');
+addToCart.addEventListener("click", function(productId) {
+    if (color === '') {
+        // If there is no selected color
+        alert("Select a color of the item."); 
+    } else if (quantity <= 0 || quantity > 100) {
+        alert("Check the quantity of the articles!.");
+    } else {
     /**
      * LOCALSTORAGE
      * Created object of product
@@ -57,5 +65,13 @@ fetch(urlparams + productId)
     localStorage.setItem('products', JSON.stringify(product));
     
     cart = JSON.parse(localStorage.getItem("cart"));
-        window.location.href = "./cart.html";
-    });
+
+    foundId = cart.find((productId) => productId === productId);
+    cart.push(products);
+    console.log(foundId);
+
+    
+
+    alert("Go to the cart");
+    }
+});
