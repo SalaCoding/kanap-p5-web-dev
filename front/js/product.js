@@ -41,7 +41,7 @@ fetch(urlparams + productId)
 
 //BUTTON HANDLE LOCALSTOREGE
 const addToCart = document.getElementById('addToCart');
-addToCart.addEventListener("click", function(productId) {
+addToCart.addEventListener("click", function() {
     if (color === '') {
         // If there is no selected color
         alert("Select a color of the item."); 
@@ -64,14 +64,13 @@ addToCart.addEventListener("click", function(productId) {
     //Store object data in the localstorage.
     localStorage.setItem('products', JSON.stringify(product));
     
-    cart = JSON.parse(localStorage.getItem("cart"));
+    if(!localStorage.getItem("cart")){
+        localStorage.setItem("cart", "[]");
+     }
+    //addItem();
+    //console.log(foundId);
 
-    foundId = cart.find((productId) => productId === productId);
-    cart.push(products);
-    console.log(foundId);
-
-    
-
-    alert("Go to the cart");
+    alert("Your item was added to the cart");
+    window.location.href = "./index.html";
     }
 });

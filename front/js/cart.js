@@ -1,5 +1,7 @@
 // SETTING GLOBAL VARIABLE SO WE CAN ACCESS IT  .
 let products = JSON.parse(localStorage.getItem("products"));
+// Retrieve the object from storage or the object is empty
+cart = JSON.parse(localStorage.getItem('cart'));
 
 //GE ACCES TO THE DOM
 const cart__items = document.getElementById('cart__items');
@@ -17,7 +19,11 @@ const qty = document.createElement('p');
 let input = document.createElement('input');
 const cart__item__content__settings__quantity__delete = document.createElement('div');
 const p__deleteItem = document.createElement('p');
-let productId;
+//HERE WE DECLARE OUR ID
+let productId = products.id;
+console.log(productId);
+//HERE WE ARE FINDING OUR EXISTING PRODUCT ID IN THE CART
+let foundId ='';
 
     //GET ACCESS TO THE DOM
   //let cart__price = document.getElementById('cart__price');
@@ -81,40 +87,23 @@ let productId;
     cart__item__content__settings.appendChild(cart__item__content__settings__quantity__delete);
     cart__item__content__settings__quantity__delete.appendChild(p__deleteItem);
 
-    cart__items.appendChild(cart__item);
+    cart__items.appendChild(cart__item); 
 
-  //ADD MORE ITEM IN THE CART
-  //Declare the the empty variable
-//let cart = [];
-// Retrieve the object from storage or the object is empty
-cart = JSON.parse(localStorage.getItem('cart')) || [];
-// Push the new data onto the array
-  cart.push(products)
-// Put the object back into storage
-localStorage.setItem('cart', JSON.stringify(cart));
-
-if (cart.length !== 0) {
-  foundId = cart.find((productId) => productId === productId && color === color);
-}
-    //console.log(foundId)  
-  let content = '';
+    let content = '';
     for (let i = 0; i < cart.length; i++) {
-      let item = cart[i];
-      
-      productId = item.id;
-      color = item.color;
+      const item = cart[i];
 
       //Displaying number of articles
       totalQuantity.textContent = cart.length;
-
-        content += `
-      <article class="cart__item" data-id="${item.id}" data-color="${item.color}">
+      
+      content += `
+      <article class="cart__item" data-id="${productId}" data-color="${item.color}">
       <div class="cart__item__img">
       <img src="${item.imgUrl}" alt="${item.altText}">
     </div>
     <div class="cart__item__content">
       <div class="cart__item__content__description">
-        <h2>${item.title}</h2> 
+        <h2>${item.title}</h2>
         <p>${item.color}</p>
         <p>€ ${item.price}</p>
       </div>
@@ -129,11 +118,33 @@ if (cart.length !== 0) {
       </div>
     </div>
     </article>`;
-      }
+    }
     cart__items.innerHTML = content;
-    console.log(cart__items);
+   
+    // Finding product object with id
+    foundId = cart.findIndex((product) => product.id === productId);
+    console.log(`${cart[foundId].id}`); 
+    if (cart.length == 0) {
+      cart.push(products);
+    } else{
+      let res = cart.findIndex((item) => item.id === productId);
+      console.log(`${cart[res].id}`);
+      if (res === undefined){
+        // Push the new data onto the array
+      cart.push(products); 
+      }
+    }
+    // Put the object back into storage
+    localStorage.setItem('cart', JSON.stringify(cart));
       
-
+        p__deleteItem.addEventListener('click', function() {
+          function removeItem(productId) {
+            let temp = cart.filter(item => item.id !== productId);
+            localStorage.setItem('cart', JSON.stringify(temp));
+          }
+          removeItem(0)
+          console.log(removeItem());
+        })
 
    //GET ACCESS TO THE DOM  AND VALUE 
    const firstName = document.getElementById('firstName').value;
