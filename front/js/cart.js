@@ -2,7 +2,6 @@
 let products = JSON.parse(localStorage.getItem("products"));
 // Retrieve the object from storage or the object is empty
 cart = JSON.parse(localStorage.getItem('cart'));
-
 //GE ACCES TO THE DOM
 const cart__items = document.getElementById('cart__items');
 const cart__item = document.createElement('article');
@@ -29,7 +28,13 @@ let foundId ='';
   //let cart__price = document.getElementById('cart__price');
   let totalQuantity = document.getElementById('totalQuantity');
   let totalPrice = document.getElementById('totalPrice');
-
+  
+  cart.push(products);
+  if (products.id === products.id && color.color === color.color) {
+    localStorage.removeItem(products)
+  }
+  // Put the object back into storage
+  localStorage.setItem('cart', JSON.stringify(cart));
   /**
   * RETRIVE ONLY A SINGLE PRODUCT
   * 
@@ -89,15 +94,28 @@ let foundId ='';
 
     cart__items.appendChild(cart__item); 
 
+    //foundId = cart.findIndex((product) => product.id == productId);
+      //console.log(`${cart[foundId].id}`);
+    // Finding product object with id
+    //if (cart.length == 0) {
+    //  cart.push(foundId);
+    //} 
+    // Put the object back into storage
+    //localStorage.setItem('cart', JSON.stringify(cart));
+
     let content = '';
     for (let i = 0; i < cart.length; i++) {
-      const item = cart[i];
+      const item = cart[i]; 
 
       //Displaying number of articles
       totalQuantity.textContent = cart.length;
-      
+      //let cost = item.price
+      let val = item.quantity;
+      //console.log(cost);
+      //console.log(val);
+      //console.log(price.textContent = (cost + totalQuantity))
       content += `
-      <article class="cart__item" data-id="${productId}" data-color="${item.color}">
+      <article class="cart__item" data-id="${item.id}" data-color="${item.color}">
       <div class="cart__item__img">
       <img src="${item.imgUrl}" alt="${item.altText}">
     </div>
@@ -118,37 +136,31 @@ let foundId ='';
       </div>
     </div>
     </article>`;
+
+    if (cart.length == 0) {
+      //Push product in the cart.
+      cart.push(products);
+    } else if (products.id === item.id && products.color === item.color) {
+      //Remove product in localstorage inside products store
+      localStorage.removeItem(products);
+      //Set a new space
+      localStorage.setItem("products", "[]");
+    } else if (cart[i].id === item.id && cart[i].color === item.color) {
+       //Store object data in the localstorage.
+      localStorage.removeItem(item.id);
+    } else if (cart === undefined) {
+      //Store object data in the localstorage.
+      cart.closest(cart__item);
+      cart.splice(item);
+    } else {
+      cart.push(products);
+    }
     }
     cart__items.innerHTML = content;
-   
-    // Finding product object with id
-    foundId = cart.findIndex((product) => product.id === productId);
-    console.log(`${cart[foundId].id}`); 
-    if (cart.length == 0) {
-      cart.push(products);
-    } else{
-      let res = cart.findIndex((item) => item.id === productId);
-      console.log(`${cart[res].id}`);
-      if (res === undefined){
-        // Push the new data onto the array
-      cart.push(products); 
-      }
-    }
-    // Put the object back into storage
-    localStorage.setItem('cart', JSON.stringify(cart));
-      
-        p__deleteItem.addEventListener('click', function() {
-          function removeItem(productId) {
-            let temp = cart.filter(item => item.id !== productId);
-            localStorage.setItem('cart', JSON.stringify(temp));
-          }
-          removeItem(0)
-          console.log(removeItem());
-        })
 
-   //GET ACCESS TO THE DOM  AND VALUE 
-   const firstName = document.getElementById('firstName').value;
-   const lastName = document.getElementById('lastName').value;
-   const address = document.getElementById('address').value;
-   const city = document.getElementById('city').value;
-   const email = document.getElementById('email').value;
+    cart__item.dataset = cart__item;
+    console.log(cart__item)
+   if (cart__item.dataset.data-id === undefined) {
+    delete cart__item.dataset.data-id
+   }
+   

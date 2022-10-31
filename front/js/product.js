@@ -11,7 +11,6 @@ const productDescription = document.getElementById("description");
 let color = document.getElementById("colors");
 const quantityNum =  document.getElementById('quantity');
 let quantity;
-let foundId;
 let products
 
 console.log(params)
@@ -42,11 +41,11 @@ fetch(urlparams + productId)
 //BUTTON HANDLE LOCALSTOREGE
 const addToCart = document.getElementById('addToCart');
 addToCart.addEventListener("click", function() {
-    if (color === '') {
+    if (color.value == '') {
         // If there is no selected color
-        alert("Select a color of the item."); 
-    } else if (quantity <= 0 || quantity > 100) {
-        alert("Check the quantity of the articles!.");
+        alert("Select the color of the item.");
+    }else if (quantityNum.value <= 0 || quantityNum.value > 100) {
+        alert("Check the quantity of the articles.");
     } else {
     /**
      * LOCALSTORAGE
@@ -67,9 +66,26 @@ addToCart.addEventListener("click", function() {
     if(!localStorage.getItem("cart")){
         localStorage.setItem("cart", "[]");
      }
-    //addItem();
-    //console.log(foundId);
 
+     // SETTING GLOBAL VARIABLE SO WE CAN ACCESS IT  .
+let products = JSON.parse(localStorage.getItem("products"));
+// Retrieve the object from storage or the object is empty
+cart = JSON.parse(localStorage.getItem('cart'));
+for (let i = 0; i < cart.length; i++) {
+    const item = cart[i]; 
+     if (products.id === item.id && products.color === item.color) {
+        //Remove product in localstorage inside products store
+        localStorage.removeItem(products);
+        //Set a new space
+        localStorage.setItem("products", "[]");
+      } else if (cart[i].id === item.id && cart[i].color === item.color) {
+        //Store object data in the localstorage.
+        localStorage.removeItem(item.id);
+      }
+       else {
+        localStorage.getItem("cart").push(products);
+      }
+}
     alert("Your item was added to the cart");
     window.location.href = "./index.html";
     }
