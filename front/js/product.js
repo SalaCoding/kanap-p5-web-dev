@@ -51,7 +51,7 @@ addToCart.addEventListener("click", function() {
      * LOCALSTORAGE
      * Created object of product
      */
-    const product = {
+    const data = {
         id: productId,
         imgUrl: imageURL,
         img: altTxt,
@@ -61,29 +61,29 @@ addToCart.addEventListener("click", function() {
         quantity: quantityNum.value,
     }
     //Store object data in the localstorage.
-    localStorage.setItem('products', JSON.stringify(product));
+    localStorage.setItem('product', JSON.stringify(data));
     
     if(!localStorage.getItem("cart")){
         localStorage.setItem("cart", "[]");
      }
 
      // SETTING GLOBAL VARIABLE SO WE CAN ACCESS IT  .
-let products = JSON.parse(localStorage.getItem("products"));
+let product = JSON.parse(localStorage.getItem("product"));
 // Retrieve the object from storage or the object is empty
 cart = JSON.parse(localStorage.getItem('cart'));
 for (let i = 0; i < cart.length; i++) {
     const item = cart[i]; 
-     if (products.id === item.id && products.color === item.color) {
+     if (product.id === item.id && product.color === item.color) {
         //Remove product in localstorage inside products store
-        localStorage.removeItem(products);
+        localStorage.removeItem(product);
         //Set a new space
-        localStorage.setItem("products", "[]");
+        localStorage.setItem("product", "[]");
       } else if (cart[i].id === item.id && cart[i].color === item.color) {
         //Store object data in the localstorage.
         localStorage.removeItem(item.id);
       }
        else {
-        localStorage.getItem("cart").push(products);
+        cart.push(product);
       }
 }
     alert("Your item was added to the cart");

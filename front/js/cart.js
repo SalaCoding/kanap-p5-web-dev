@@ -1,5 +1,5 @@
 // SETTING GLOBAL VARIABLE SO WE CAN ACCESS IT  .
-let products = JSON.parse(localStorage.getItem("products"));
+let product = JSON.parse(localStorage.getItem("product"));
 // Retrieve the object from storage or the object is empty
 cart = JSON.parse(localStorage.getItem('cart'));
 //GE ACCES TO THE DOM
@@ -19,20 +19,15 @@ let input = document.createElement('input');
 const cart__item__content__settings__quantity__delete = document.createElement('div');
 const p__deleteItem = document.createElement('p');
 //HERE WE DECLARE OUR ID
-let productId = products.id;
-console.log(productId);
-//HERE WE ARE FINDING OUR EXISTING PRODUCT ID IN THE CART
-let foundId ='';
-
-    //GET ACCESS TO THE DOM
+//let productId = product.id;
+console.log(product);
+ //GET ACCESS TO THE DOM
   //let cart__price = document.getElementById('cart__price');
   let totalQuantity = document.getElementById('totalQuantity');
   let totalPrice = document.getElementById('totalPrice');
   
-  cart.push(products);
-  if (products.id === products.id && color.color === color.color) {
-    localStorage.removeItem(products)
-  }
+  cart.push(product)
+  
   // Put the object back into storage
   localStorage.setItem('cart', JSON.stringify(cart));
   /**
@@ -44,20 +39,21 @@ let foundId ='';
   * CLASSNAME TO APPLY THE CSS OF CLASS
   * APPENCHILD TO INSERT THE ELEMENT CREATED
   */
-  cart__item.setAttribute('data-id', products.id);
-  cart__item.setAttribute('data-color', products.color);
+   cart__item.setAttribute('data-id', product.id);
+    cart__item.setAttribute('data-color', product.color);
   
-   cart__item__imgUrl.setAttribute('src', products.imgUrl);
-   cart__item__imgUrl.setAttribute('alt', products.altText);
+   cart__item__imgUrl.setAttribute('src', product.imgUrl);
+   cart__item__imgUrl.setAttribute('alt', product.altText);
    
     //NAME, COLOR, PRICE AND QUANTITY
-    h2.innerText = products.title;
-    color.textContent = products.color;
-    price.textContent = '€' + products.price;
+    h2.innerText = product.title;
+    color.textContent = product.color;
+    price.textContent = '€' + product.price;
+    console.log(price)
     qty.textContent = 'Qte : ';
     
     //INPUT RECEIVE VALUE AND CAN BE ADJUST
-    input.value = products.quantity;
+    input.value = product.quantity;
     input.setAttribute("type", "number");
     input.setAttribute("min", "1");
     input.setAttribute("max", "100");
@@ -94,26 +90,30 @@ let foundId ='';
 
     cart__items.appendChild(cart__item); 
 
-    //foundId = cart.findIndex((product) => product.id == productId);
-      //console.log(`${cart[foundId].id}`);
-    // Finding product object with id
-    //if (cart.length == 0) {
-    //  cart.push(foundId);
-    //} 
-    // Put the object back into storage
-    //localStorage.setItem('cart', JSON.stringify(cart));
+    //I HAVE TO WORK ON IT
+    console.log(cart__item.closest('article').dataset.id);
+    console.log(cart__item.closest('article').dataset.color)
 
     let content = '';
+    let item = {};
+    let totalCount = 0;
     for (let i = 0; i < cart.length; i++) {
-      const item = cart[i]; 
+      item = cart[i];
+      let element = item.price
 
+      //CALCULATION OF THE PRODUCT
+      cartLenght = cart.length
       //Displaying number of articles
       totalQuantity.textContent = cart.length;
-      //let cost = item.price
-      let val = item.quantity;
-      //console.log(cost);
-      //console.log(val);
-      //console.log(price.textContent = (cost + totalQuantity))
+      //MULTIPLICATION OF ARTICLE PRICE
+      totalPrice.textContent = Number(element * cartLenght);
+      //GET ALL THE QUANTITY OF THE PRODUCTS
+      for (let i = 0; i < item.quantity; i++) {
+        const eachItemNumber = item.quantity[i];
+        console.log(eachItemNumber)
+        console.log(eachItemNumber)
+      }
+      
       content += `
       <article class="cart__item" data-id="${item.id}" data-color="${item.color}">
       <div class="cart__item__img">
@@ -123,7 +123,7 @@ let foundId ='';
       <div class="cart__item__content__description">
         <h2>${item.title}</h2>
         <p>${item.color}</p>
-        <p>€ ${item.price}</p>
+        <p>€ ${element}</p>
       </div>
       <div class="cart__item__content__settings">
         <div class="cart__item__content__settings__quantity">
@@ -137,30 +137,18 @@ let foundId ='';
     </div>
     </article>`;
 
-    if (cart.length == 0) {
-      //Push product in the cart.
-      cart.push(products);
-    } else if (products.id === item.id && products.color === item.color) {
-      //Remove product in localstorage inside products store
-      localStorage.removeItem(products);
-      //Set a new space
-      localStorage.setItem("products", "[]");
-    } else if (cart[i].id === item.id && cart[i].color === item.color) {
-       //Store object data in the localstorage.
-      localStorage.removeItem(item.id);
-    } else if (cart === undefined) {
-      //Store object data in the localstorage.
-      cart.closest(cart__item);
-      cart.splice(item);
-    } else {
-      cart.push(products);
-    }
+      //if (item.id === item.id && item.color === item.color) {
+        //Remove product in localstorage inside products store
+        
+        //Set a new space
+      //  localStorage.removeItem(product);
+      //  localStorage.setItem("product", "[]");
+      //  cart.slice(1)
+      //}
     }
     cart__items.innerHTML = content;
 
-    cart__item.dataset = cart__item;
-    console.log(cart__item)
-   if (cart__item.dataset.data-id === undefined) {
-    delete cart__item.dataset.data-id
-   }
-   
+    ////console.log(item.id)
+    //console.log(item.color)
+    //console.log(item.quantity)
+      
