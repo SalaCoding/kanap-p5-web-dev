@@ -2,6 +2,10 @@
 let product = JSON.parse(localStorage.getItem("product"));
 // Retrieve the object from storage or the object is empty
 cart = JSON.parse(localStorage.getItem('cart'));
+cart.push(product);
+// Put the object back into storage
+localStorage.setItem('cart', JSON.stringify(cart));
+
 //GE ACCES TO THE DOM
 const cart__items = document.getElementById('cart__items');
 const cart__item = document.createElement('article');
@@ -18,17 +22,10 @@ const qty = document.createElement('p');
 let input = document.createElement('input');
 const cart__item__content__settings__quantity__delete = document.createElement('div');
 const p__deleteItem = document.createElement('p');
-//HERE WE DECLARE OUR ID
-//let productId = product.id;
-console.log(product);
- //GET ACCESS TO THE DOM
-  //let cart__price = document.getElementById('cart__price');
-  let totalQuantity = document.getElementById('totalQuantity');
-  let totalPrice = document.getElementById('totalPrice');
-  
-  cart.push(product)
-  // Put the object back into storage
-  localStorage.setItem('cart', JSON.stringify(cart));
+//let cart__price = document.getElementById('cart__price');
+let totalQuantity = document.getElementById('totalQuantity');
+let totalPrice = document.getElementById('totalPrice');
+
   /**
   * RETRIVE ONLY A SINGLE PRODUCT
   * 
@@ -38,17 +35,16 @@ console.log(product);
   * CLASSNAME TO APPLY THE CSS OF CLASS
   * APPENCHILD TO INSERT THE ELEMENT CREATED
   */
-   cart__item.setAttribute('data-id', product.id);
-    cart__item.setAttribute('data-color', product.color);
+  cart__item.setAttribute('data-id', product.id);
+  cart__item.setAttribute('data-color', product.color);
   
-   cart__item__imgUrl.setAttribute('src', product.imgUrl);
-   cart__item__imgUrl.setAttribute('alt', product.altText);
+  cart__item__imgUrl.setAttribute('src', product.imgUrl);
+  cart__item__imgUrl.setAttribute('alt', product.altText);
    
     //NAME, COLOR, PRICE AND QUANTITY
     h2.innerText = product.title;
     color.textContent = product.color;
     price.textContent = '€' + product.price;
-    console.log(price)
     qty.textContent = 'Qte : ';
     
     //INPUT RECEIVE VALUE AND CAN BE ADJUST
@@ -87,20 +83,21 @@ console.log(product);
     cart__item__content__settings.appendChild(cart__item__content__settings__quantity__delete);
     cart__item__content__settings__quantity__delete.appendChild(p__deleteItem);
 
-    cart__items.appendChild(cart__item); 
+    cart__items.appendChild(cart__item);
 
-    //I HAVE TO WORK ON IT
-    console.log(cart__item.closest('article').dataset.id);
-    console.log(cart__item.closest('article').dataset.color);
+
+    //DEFINE CLOSEST ELEMENT
+    let getProId = cart__item.closest('article').dataset.id
+    console.log(getProId);
+    let getProColor = cart__item.closest('article').dataset.color;
+
 
     let content = '';
-    //let item = {};
-    //let totalCount = 0;
-    //let priceSum = 0;
-    //let foundProduct;
-    for (let i = 0; i < cart.length; i++) {
+    let item;
+    function multipleItems() {
+      for (let i = 0; i < cart.length; i++) {
       item = cart[i];
-      let element = item.price
+      let element = item.price;
 
       //CALCULATION OF THE PRODUCT
       cartLenght = cart.length
@@ -130,44 +127,57 @@ console.log(product);
     </div>
     </article>`;
 
-    if (cart.length == 0) {
-        //Push product in the cart.
-        cart.push(product);
-      } else if (product.id === item.id && product.color === item.color) {
-        //Remove product in localstorage inside products store
-        //localStorage.removeItem(product);
-        //Set a new space
-        localStorage.removeItem(product);
-        //localStorage.setItem("product", '[]');
-      } else if (cart[i].id === item.id && cart[i].color === item.color) {
-         //Store object data in the localstorage.
-        localStorage.removeItem(item.id);
-      } else if (cart === undefined) {
-        //Store object data in the localstorage.
-        cart.closest(cart__item); 
-        cart.splice(item);
-      } else {
-        cart.push(product);
-      }
-
+    
+    if (cart === undefined) {
+      cart = [];
+    } else if (item.id !== getProId){
+      cart.push(product)
+      localStorage.setItem('cart', JSON.stringify(cart));
+    } else if (item.id === getProId && item.color == getProColor){
+        //alert('Hello world');
+        //cart__item.closest('section').splice(item, 1);
+    } else {
+      cart.push(product)
+      // Put the object back into storage
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
     }
     cart__items.innerHTML = content;
+  }
+  multipleItems();
+
+//FUNCTION FOR DELETE BTN
+  function removeItem(getProId) {
+      console.log(p__deleteItem);
+      cart.forEach(element => { 
+      p__deleteItem.addEventListener("click", () => {
+        //event.preventDefault();
+
+        //DEFINE CLOSEST ELEMENT
+        getProId = element.closest('article').dataset.id;
+        //getProColor = element.closest('article').dataset.color;
+        let tempCart = cart.filter((el) => el.id !== getProId);
+        localStorage.setItem("cart", JSON.stringify(tempCart));
+
+        location.reload();
+      });
+      console.log(cart, product.id);
+    })
+  }
+  removeItem(getProId);
 
     //CALCULATION OF THE PRODUCT
-    let unknownQty = 0;
+    let quantityOfOneProduct = 0;
     let quantityOfTheLength = 0;
+    let priceOfItem = 0;
     let allPrice = 0;
-    function sumOfItem() {
       cart.forEach(element => {
-        unknownQty = element.quantity.length;
-        quantityOfTheLength = element.quantity;
-        allPrice += (quantityOfTheLength * item.price); 
+        console.log(getProId)
+        //unknownQty = element.quantity.length;
+        quantityOfTheLength += Number(element.quantity);
+        priceOfItem = element.price;
+        allPrice += Number(quantityOfTheLength * priceOfItem); 
       });
-      console.log(unknownQty)
-    console.log(quantityOfTheLength)
-    console.log(totalPrice.innerText = allPrice)
-    }
-    sumOfItem();
-  
-  /////////////////////////////// The function to DELETE a product and remove it from the localStorage
-  
+      //console.log(quantityOfTheLength)
+      console.log(totalPrice.innerText = allPrice)
+      localStorage.setItem("cart", JSON.stringify(cart));
