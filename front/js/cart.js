@@ -27,7 +27,6 @@ console.log(product);
   let totalPrice = document.getElementById('totalPrice');
   
   cart.push(product)
-  
   // Put the object back into storage
   localStorage.setItem('cart', JSON.stringify(cart));
   /**
@@ -92,11 +91,13 @@ console.log(product);
 
     //I HAVE TO WORK ON IT
     console.log(cart__item.closest('article').dataset.id);
-    console.log(cart__item.closest('article').dataset.color)
+    console.log(cart__item.closest('article').dataset.color);
 
     let content = '';
-    let item = {};
-    let totalCount = 0;
+    //let item = {};
+    //let totalCount = 0;
+    //let priceSum = 0;
+    //let foundProduct;
     for (let i = 0; i < cart.length; i++) {
       item = cart[i];
       let element = item.price
@@ -105,15 +106,7 @@ console.log(product);
       cartLenght = cart.length
       //Displaying number of articles
       totalQuantity.textContent = cart.length;
-      //MULTIPLICATION OF ARTICLE PRICE
-      totalPrice.textContent = Number(element * cartLenght);
-      //GET ALL THE QUANTITY OF THE PRODUCTS
-      for (let i = 0; i < item.quantity; i++) {
-        const eachItemNumber = item.quantity[i];
-        console.log(eachItemNumber)
-        console.log(eachItemNumber)
-      }
-      
+    
       content += `
       <article class="cart__item" data-id="${item.id}" data-color="${item.color}">
       <div class="cart__item__img">
@@ -137,18 +130,44 @@ console.log(product);
     </div>
     </article>`;
 
-      //if (item.id === item.id && item.color === item.color) {
+    if (cart.length == 0) {
+        //Push product in the cart.
+        cart.push(product);
+      } else if (product.id === item.id && product.color === item.color) {
         //Remove product in localstorage inside products store
-        
+        //localStorage.removeItem(product);
         //Set a new space
-      //  localStorage.removeItem(product);
-      //  localStorage.setItem("product", "[]");
-      //  cart.slice(1)
-      //}
+        localStorage.removeItem(product);
+        //localStorage.setItem("product", '[]');
+      } else if (cart[i].id === item.id && cart[i].color === item.color) {
+         //Store object data in the localstorage.
+        localStorage.removeItem(item.id);
+      } else if (cart === undefined) {
+        //Store object data in the localstorage.
+        cart.closest(cart__item); 
+        cart.splice(item);
+      } else {
+        cart.push(product);
+      }
+
     }
     cart__items.innerHTML = content;
 
-    ////console.log(item.id)
-    //console.log(item.color)
-    //console.log(item.quantity)
-      
+    //CALCULATION OF THE PRODUCT
+    let unknownQty = 0;
+    let quantityOfTheLength = 0;
+    let allPrice = 0;
+    function sumOfItem() {
+      cart.forEach(element => {
+        unknownQty = element.quantity.length;
+        quantityOfTheLength = element.quantity;
+        allPrice += (quantityOfTheLength * item.price); 
+      });
+      console.log(unknownQty)
+    console.log(quantityOfTheLength)
+    console.log(totalPrice.innerText = allPrice)
+    }
+    sumOfItem();
+  
+  /////////////////////////////// The function to DELETE a product and remove it from the localStorage
+  
