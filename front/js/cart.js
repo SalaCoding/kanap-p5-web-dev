@@ -128,56 +128,47 @@ let totalPrice = document.getElementById('totalPrice');
     </article>`;
 
     
-    if (cart === undefined) {
-      cart = [];
-    } else if (item.id !== getProId){
-      cart.push(product)
-      localStorage.setItem('cart', JSON.stringify(cart));
-    } else if (item.id === getProId && item.color == getProColor){
-        //alert('Hello world');
-        //cart__item.closest('section').splice(item, 1);
-    } else {
-      cart.push(product)
-      // Put the object back into storage
-      localStorage.setItem('cart', JSON.stringify(cart));
-    }
+    
     }
     cart__items.innerHTML = content;
   }
   multipleItems();
 
 //FUNCTION FOR DELETE BTN
-  function removeItem(getProId) {
-      console.log(p__deleteItem);
-      cart.forEach(element => { 
-      p__deleteItem.addEventListener("click", () => {
-        //event.preventDefault();
+    
+p__deleteItem.addEventListener("click", () => {
+  cart.forEach(element => { 
+    function removeItem(getProId) {
+      //DEFINE CLOSEST ELEMENT
+      getProId = element.closest('article').dataset.id;
+    
+      let tempCart = cart.filter((el) => el.id !== getProId);
+      localStorage.setItem("cart", JSON.stringify(tempCart));
+      location.reload();
+      //total sum
 
-        //DEFINE CLOSEST ELEMENT
-        getProId = element.closest('article').dataset.id;
-        //getProColor = element.closest('article').dataset.color;
-        let tempCart = cart.filter((el) => el.id !== getProId);
-        localStorage.setItem("cart", JSON.stringify(tempCart));
-
-        location.reload();
-      });
       console.log(cart, product.id);
-    })
-  }
-  removeItem(getProId);
+    }
+    removeItem(getProId);
+  })
+});
 
     //CALCULATION OF THE PRODUCT
     let quantityOfOneProduct = 0;
     let quantityOfTheLength = 0;
     let priceOfItem = 0;
     let allPrice = 0;
+    function sum() {
       cart.forEach(element => {
         console.log(getProId)
         //unknownQty = element.quantity.length;
         quantityOfTheLength += Number(element.quantity);
         priceOfItem = element.price;
-        allPrice += Number(quantityOfTheLength * priceOfItem); 
+        allPrice = Number(quantityOfTheLength * priceOfItem); 
       });
-      //console.log(quantityOfTheLength)
+    }
+    sum()
+      
+      console.log(quantityOfTheLength)
       console.log(totalPrice.innerText = allPrice)
       localStorage.setItem("cart", JSON.stringify(cart));
