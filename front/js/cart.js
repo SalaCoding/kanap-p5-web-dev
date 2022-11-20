@@ -1,10 +1,15 @@
+let product = [];
+let cart = [];
 // SETTING GLOBAL VARIABLE SO WE CAN ACCESS IT  .
-let product = JSON.parse(localStorage.getItem("product"));
+product = JSON.parse(localStorage.getItem("product"));
+if (cart === null) {
+  // We create an array
+  cart = [];
+}
 // Retrieve the object from storage or the object is empty
 cart = JSON.parse(localStorage.getItem('cart'));
 cart.push(product);
-// Put the object back into storage
-localStorage.setItem('cart', JSON.stringify(cart));
+
 
 //GE ACCES TO THE DOM
 const cart__items = document.getElementById('cart__items');
@@ -25,6 +30,9 @@ const p__deleteItem = document.createElement('p');
 //let cart__price = document.getElementById('cart__price');
 let totalQuantity = document.getElementById('totalQuantity');
 let totalPrice = document.getElementById('totalPrice');
+
+let newQty = 0;
+let itemFound;
 
   /**
   * RETRIVE ONLY A SINGLE PRODUCT
@@ -91,84 +99,92 @@ let totalPrice = document.getElementById('totalPrice');
     console.log(getProId);
     let getProColor = cart__item.closest('article').dataset.color;
 
+  // --------------------------------------------------------------
+  function increaseNumber() {
+    cart.forEach(element => {
+      newQty += Number(element.quantity);
+      // Put the object back into storage
+      localStorage.setItem('cart', JSON.stringify(cart));
+    });
+  }
+  increaseNumber();
+    // -------------------------------------------------------------
+   
 
     let content = '';
     let item;
     function multipleItems() {
       for (let i = 0; i < cart.length; i++) {
       item = cart[i];
-      let element = item.price;
 
-      //CALCULATION OF THE PRODUCT
-      cartLenght = cart.length
-      //Displaying number of articles
-      totalQuantity.textContent = cart.length;
-    
       content += `
-      <article class="cart__item" data-id="${item.id}" data-color="${item.color}">
-      <div class="cart__item__img">
-      <img src="${item.imgUrl}" alt="${item.altText}">
-    </div>
-    <div class="cart__item__content">
-      <div class="cart__item__content__description">
-        <h2>${item.title}</h2>
-        <p>${item.color}</p>
-        <p>€ ${element}</p>
+        <article class="cart__item" data-id="${item.id}" data-color="${item.color}">
+        <div class="cart__item__img">
+        <img src="${item.imgUrl}" alt="${item.altText}">
       </div>
-      <div class="cart__item__content__settings">
-        <div class="cart__item__content__settings__quantity">
-          <p>Qté : </p>
-          <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${item.quantity}">
+      <div class="cart__item__content">
+        <div class="cart__item__content__description">
+          <h2>${item.title}</h2>
+          <p>${item.color}</p>
+          <p>€ ${item.price}</p>
         </div>
-        <div class="cart__item__content__settings__delete">
-          <p class="deleteItem">Delete</p>
+        <div class="cart__item__content__settings">
+          <div class="cart__item__content__settings__quantity">
+            <p>Qté : </p>
+            <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${newQty}">
+          </div>
+          <div class="cart__item__content__settings__delete">
+            <p class="deleteItem">Delete</p>
+          </div>
         </div>
       </div>
-    </div>
-    </article>`;
-
-    
-    
+      </article>`;
     }
     cart__items.innerHTML = content;
   }
   multipleItems();
+   // -----------------------------------------------------------------
+  // GET THE LENGTH OF THE CART
+   function getLength() {
+   for (let i = 0; i < cart.length; i++) {
+    console.log(cart[i].length)
+    totalQuantity.textContent = cart[i].length;
+   }
+  }
+   // ------------------------------------------------------------------
+  //CALCULATION OF THE PRODUCT
+  let priceOfItem = 0;
+  let allPrice = 0;
+  function sum() {
+    cart.forEach(element => {
+      //unknownQty = element.quantity.length;
+      console.log(priceOfItem = element.price);
+      allPrice += Number(element.quantity * priceOfItem);
+      // Put the object back into storage
+      localStorage.setItem('cart', JSON.stringify(cart)); 
+    });
+    totalPrice.textContent = allPrice.toFixed(2)
+  }
+  sum()
+   // --------------------------------------------------------------------
 
+  
 //FUNCTION FOR DELETE BTN
-    
-p__deleteItem.addEventListener("click", () => {
-  cart.forEach(element => { 
-    function removeItem(getProId) {
-      //DEFINE CLOSEST ELEMENT
-      getProId = element.closest('article').dataset.id;
-    
-      let tempCart = cart.filter((el) => el.id !== getProId);
-      localStorage.setItem("cart", JSON.stringify(tempCart));
-      location.reload();
-      //total sum
-
-      console.log(cart, product.id);
-    }
-    removeItem(getProId);
-  })
-});
-
-    //CALCULATION OF THE PRODUCT
-    let quantityOfOneProduct = 0;
-    let quantityOfTheLength = 0;
-    let priceOfItem = 0;
-    let allPrice = 0;
-    function sum() {
-      cart.forEach(element => {
-        console.log(getProId)
-        //unknownQty = element.quantity.length;
-        quantityOfTheLength += Number(element.quantity);
-        priceOfItem = element.price;
-        allPrice = Number(quantityOfTheLength * priceOfItem); 
-      });
-    }
-    sum()
-      
-      console.log(quantityOfTheLength)
-      console.log(totalPrice.innerText = allPrice)
+function deleteItem() {
+  let cartItem;
+  for (let i = 0; i < p__deleteItem.length; i++) {
+    const element = p__deleteItem[i];
+    console.log(element + ' Hello')
+    element.addEventListener('click', (event) => {
+      event.preventDefault();
+      let productTargetdId = cart__item.closest('article').dataset.id
+    console.log(productTargetdId);
+    let productTargetdColor = cart__item.closest('article').dataset.color;
+      cartItem = cart.filter((el) => el.id !== productTargetdId || el.color !== productTargetdColor);
       localStorage.setItem("cart", JSON.stringify(cart));
+      location.reload();
+    })
+  }
+}
+deleteItem();
+// ----------------------------------------------------------------------

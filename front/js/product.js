@@ -67,25 +67,13 @@ addToCart.addEventListener("click", function() {
         localStorage.setItem("cart", "[]");
      }
 
+     cart =[];
+
      // SETTING GLOBAL VARIABLE SO WE CAN ACCESS IT  .
 let product = JSON.parse(localStorage.getItem("product"));
 // Retrieve the object from storage or the object is empty
 cart = JSON.parse(localStorage.getItem('cart'));
-for (let i = 0; i < cart.length; i++) {
-    const item = cart[i]; 
-     if (product.id === item.id && product.color === item.color) {
-        //Remove product in localstorage inside products store
-        localStorage.removeItem(product);
-        //Set a new space
-        localStorage.setItem("product", "[]");
-      } else if (cart[i].id === item.id && cart[i].color === item.color) {
-        //Store object data in the localstorage.
-        localStorage.removeItem(item.id);
-      }
-       else {
-        cart.push(product);
-      }
-}
+
     alert("Your item was added to the cart");
     window.location.href = "./index.html";
     }
